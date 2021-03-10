@@ -16,4 +16,4 @@ Gdy nastąpi wykrycie kostki(materiału) w podajniku jest ona przenoszona do kom
 
 
 
-<img src="https://github.com/Evroc/ProjektTS2021/blob/main/superproces.png" width="300" height="100">
+<img src="https://github.com/Evroc/ProjektTS2021/blob/main/superproces.png" width="500" height="300">
