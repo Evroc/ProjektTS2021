@@ -2,7 +2,7 @@
 
 Super projekt.
 
- ##Zespół:
+ ## Zespół:
 
 - Natalia Białek
 
@@ -10,7 +10,7 @@ Super projekt.
 
 - Michael Grabowski
 
-##Opis projektu
+## Opis projektu
 
 Projekt przedstawia proces obrabiania elementów aluminiowych przez frezarke CNC. 
 
