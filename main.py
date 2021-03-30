@@ -49,32 +49,7 @@ path_3 = ["0_1", "1_2", "2_3", "3_0"]
 paths = [path_1]
 
 # execute paths
-#GRAF!!!
-G = nx.petersen_graph()
-elist = [("Obiekt w podajniku", "Przenoszenie do CNC"), ("Obiekt w podajniku", "Proces zatrzymany"),
-         ("Przenoszenie do CNC", "CNC"),
-         ("CNC", "Kontrola jakości"),
-         ("Kontrola jakości", "Element odrzucony"), ("Kontrola jakości", "Przeniesienie obiektu do pudelek"),
-         ("Element odrzucony", "Obiekt w podajniku"),
-         ("Przeniesienie obiektu do pudelek", "Odbior"), ("Przeniesienie obiektu do pudelek", "Obiekt w podajniku"),
-         ("Odbior", "Proces zatrzymany"),
-         ("Proces zatrzymany", "Obiekt w podajniku")
-         ]
-llist = {("Obiekt w podajniku", "Przenoszenie do CNC"): "Sygnał - Nowy element!",
-         ("Obiekt w podajniku", "Proces zatrzymany"): "STOP!",
-         ("Przenoszenie do CNC", "CNC"): "Element odłożony!",
-         ("CNC", "Kontrola jakości"): "Element gotowy!",
-         ("Kontrola jakości", "Element odrzucony"): "Odrzucono!", ("Kontrola jakości", "Przeniesienie obiektu do pudelek"): "Przyjęto!",
-         ("Element odrzucony", "Obiekt w podajniku"): "Nowy element!",
-         ("Przeniesienie obiektu do pudelek", "Odbior"): "Pudełko pełne!", ("Przeniesienie obiektu do pudelek", "Obiekt w podajniku"): "Gotowe!",
-         ("Odbior", "Proces zatrzymany"): "Zatrzymanie procesu!",
-         ("Proces zatrzymany", "Obiekt w podajniku"): "Wznów!"
-         }
-G.add_edges_from(elist)
-#nx.draw_circular(G, **llist)
-#do tego wyzej nazwy w ''
-#nx.draw_shell(G, nlist=[range(5, 10), range(5)], llist, font_weight='bold')
-plt.show()
+
 
 
 # create a supervisor
