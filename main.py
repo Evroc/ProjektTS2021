@@ -76,7 +76,11 @@ print("--------------------------")
 print("Aby dokonac przejscia podaj wartosc z ktorej tranzycji_do ktorej tranzycji, aby wyjsc wpisz quit")
 print("Twoje obecne mozliwe tranzycje to:")
 for t in from_to[0][1]:
-    print(master_transitions[f'0_{t}'].identifier)
+    too_long = master_transitions[f'0_{t}'].identifier
+    if too_long == "0_1":
+        print(too_long, " - Otrzymano sygnal o nowym elemencie")
+    if too_long == "0_7":
+        print(too_long, " - Zatrzymanie procesu")
 
 while 1:
     print("-------------------")
@@ -87,10 +91,34 @@ while 1:
 
     master_transitions[x]._run(supervisor)
     print("-------------------")
+    print("Twoj obecny stan to: ", supervisor.current_state.name)
     print("Obecne mozliwe tranzycje to: ")
     for t in from_to[int(x[2])][1]:
+        too_long = master_transitions[f"{int(x[2])}_{t}"].identifier
+        #print(master_transitions[f"{int(x[2])}_{t}"].identifier)
+        if too_long == "0_1":
+            print(too_long, " - Otrzymano sygnal o nowym elemencie")
+        if too_long == "0_7":
+            print(too_long, " - Zatrzymanie procesu")
+        if too_long == "1_2":
+            print(too_long, " - Odlozenie elementu")
+        if too_long == "2_3":
+            print(too_long, " - Element do kontroli jakosci")
+        if too_long == "3_4":
+            print(too_long, " - Element ma wade - odrzuc")
+        if too_long == "3_5":
+            print(too_long, " - Element bez wad - przyjmij")
+        if too_long == "4_0":
+            print(too_long, " - Element odrzucony - powrot do poczatku")
+        if too_long == "5_0":
+            print(too_long, " - Potrzebuje wiecej elementow w pudelku!")
+        if too_long == "5_6":
+            print(too_long, " - Mam wystarczajaco elementow w pudelku!")
+        if too_long == "6_7":
+            print(too_long, " - Odebrano elementy, wstrzymaj proces")
+        if too_long == "7_0":
+            print(too_long, " - Wznowienie procesu")
 
-        print(master_transitions[f"{int(x[2])}_{t}"].identifier)
 
 
 #print(f"2Jesteś w punkcie {supervisor.current_state}")
