@@ -70,10 +70,32 @@ llist = {("Obiekt w podajniku", "Przenoszenie do CNC"): "Sygnał - Nowy element!
          ("Odbior", "Proces zatrzymany"): "Zatrzymanie procesu!",
          ("Proces zatrzymany", "Obiekt w podajniku"): "Wznów!"
          }
+
 G.add_edges_from(elist)
+
 #nx.draw_circular(G, **llist)
 #do tego wyzej nazwy w ''
 #nx.draw_shell(G, nlist=[range(5, 10), range(5)], llist, font_weight='bold')
+
+val_map = {'Obiekt w podajniku': 1.0,
+           'CNC': 1.0,
+           'Odbior': 1.0}
+
+values = [val_map.get(node, 0.5) for node in G.nodes()]
+
+red_edges = [('Obiekt w podajniku', 'Przenoszenie do CNC')]
+edge_colours = ['black' if not edge in red_edges else 'red'
+                for edge in G.edges()]
+black_edges = [edge for edge in G.edges() if edge not in red_edges]
+
+# Need to create a layout when doing
+# separate calls to draw nodes and edges
+pos = nx.spring_layout(G)
+nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'),
+                       node_color = values, node_size = 500)
+nx.draw_networkx_labels(G, pos)
+nx.draw_networkx_edges(G, pos, edgelist=red_edges, edge_color='r', arrows=True)
+nx.draw_networkx_edges(G, pos, edgelist=black_edges, arrows=False)
 plt.show()
 
 
@@ -81,13 +103,7 @@ plt.show()
 supervisor = Generator.create_master(master_states, master_transitions)
 
 
-
-
-# run supervisor for exemplary path
-#print("--------------------------")
-
-#print(f"Jesteś w punkcie {supervisor.current_state}")
-
+#debugowanie glownej logiki
 # for i in enumerate(from_to):
 #     try:
 #         print(i)
@@ -95,10 +111,10 @@ supervisor = Generator.create_master(master_states, master_transitions)
 #     except:
 #         print("error_msg")
 # print(from_to[0][1][0])
+
 print("********START************")
 print("Jestes w stanie startowym: ")
 print(supervisor.current_state.name)
-#print(supervisor.current_state[1])
 print("--------------------------")
 print("Aby dokonac przejscia podaj wartosc z ktorej tranzycji_do ktorej tranzycji, aby wyjsc wpisz quit")
 print("Twoje obecne mozliwe tranzycje to:")
@@ -146,18 +162,6 @@ while 1:
         if too_long == "7_0":
             print(too_long, " - Wznowienie procesu")
 
-
-
-#print(f"2Jesteś w punkcie {supervisor.current_state}")
-
-#print("Executing path: {}".format(paths))
-
-#abc = input(f"Jestes w:  {supervisor.current_state.value}")
-
-
-
-#n = input(f"Znajdujesz się w {supervisor.current_state.value}, wybierz 1 żeby przenieść obiekt do CNC lub 2 żeby zatrzymać proces ")
-# launch a transition in our supervisor
 print("-------------------")
 print("Nastapilo wyjscie z programu")
 print("-------------------")
