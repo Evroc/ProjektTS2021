@@ -1,7 +1,7 @@
 from generator import Generator
 from statemachine import StateMachine, State, Transition
 from tranzycja import *
-import CNC
+
 
 # define states for a master (way of passing args to class)
 
@@ -35,6 +35,7 @@ from_to = [
 ]
 
 
+
 master_states, master_transitions = setTransition(from_to, master_states, 'r')
 #master_transitions = {}
 
@@ -51,18 +52,14 @@ paths = [path_1]
 
 # create a supervisor
 supervisor = Generator.create_master(master_states, master_transitions)
-print("--------------------------")
-print(f"Jesteś w punkcie {supervisor.current_state}")
-# print(str(supervisor))
-print("Aby dokonac przejscia podaj wartosc z ktorej tranzycji_do ktorej tranzycji, aby wyjsc wpisz quit")
-for t in from_to[0][1]:
-    print(master_transitions[f'0_{t}'])
+
+
 
 
 # run supervisor for exemplary path
-print("--------------------------")
+#print("--------------------------")
 
-print(f"Jesteś w punkcie {supervisor.current_state}")
+#print(f"Jesteś w punkcie {supervisor.current_state}")
 
 # for i in enumerate(from_to):
 #     try:
@@ -71,19 +68,30 @@ print(f"Jesteś w punkcie {supervisor.current_state}")
 #     except:
 #         print("error_msg")
 # print(from_to[0][1][0])
+print("********START************")
+print("Jestes w stanie startowym: ")
+print(supervisor.current_state.name)
+#print(supervisor.current_state[1])
+print("--------------------------")
+print("Aby dokonac przejscia podaj wartosc z ktorej tranzycji_do ktorej tranzycji, aby wyjsc wpisz quit")
+print("Twoje obecne mozliwe tranzycje to:")
+for t in from_to[0][1]:
+    print(master_transitions[f'0_{t}'].identifier)
+
 while 1:
-    x = input()
+    print("-------------------")
+    x = input("Wpisz wybrana tranzycje: ")
     if x == str('quit'):
 
         break
 
     master_transitions[x]._run(supervisor)
-
-    print("Mozliwe tranzycje to: ")
+    print("-------------------")
+    print("Obecne mozliwe tranzycje to: ")
     for t in from_to[int(x[2])][1]:
 
         print(master_transitions[f"{int(x[2])}_{t}"].identifier)
-        print("-------------------")
+
 
 #print(f"2Jesteś w punkcie {supervisor.current_state}")
 
@@ -95,6 +103,7 @@ while 1:
 
 #n = input(f"Znajdujesz się w {supervisor.current_state.value}, wybierz 1 żeby przenieść obiekt do CNC lub 2 żeby zatrzymać proces ")
 # launch a transition in our supervisor
-print("--------------------------")
-print(supervisor.current_state)
-print("--------------------------")
+print("-------------------")
+print("Nastapilo wyjscie z programu")
+print("-------------------")
+
