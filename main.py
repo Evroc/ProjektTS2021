@@ -1,7 +1,8 @@
 from generator import Generator
 from statemachine import StateMachine, State, Transition
 from tranzycja import *
-
+import networkx as nx
+import matplotlib.pyplot as plt
 
 # define states for a master (way of passing args to class)
 
