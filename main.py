@@ -3,7 +3,6 @@ from statemachine import StateMachine, State, Transition
 from tranzycja import *
 import networkx as nx
 import matplotlib.pyplot as plt
-from customState import customState
 
 
 # define states for a master (way of passing args to class)
@@ -101,19 +100,23 @@ while 1:
         if state_now == "CNC":
             while True:
                 if slave.current_state._initial == True:
-                    print("Jedyna mozliwa tranzycja to 0_1")
+                    print("0_1 - Zamknięcie drzwi elementu podrzednego")
                 a = input("Wpisz wybrana tranzycje: ")
                 if a == "2_0":
                     break
                 slave_transitions[a]._run(slave)
+                print("-------------------")
+                print("Twoj obecny stan to: ", slave.current_state.name)
+                print("Obecne mozliwe tranzycje to: ")
+
                 for y in from_to_slave[int(a[2])][1]:
                     s_too_long = slave_transitions[f"{int(a[2])}_{y}"].identifier
-                    print("TEST2")
-                    print(s_too_long)
-                    print("TEST2")
+                    if s_too_long == "0_1":
+                        print(s_too_long, " - Zamknięcie drzwi")
+                    if s_too_long == "1_2":
+                        print(s_too_long, " - Obróbka")
                     if s_too_long == "2_0":
-                        print("Wpisane 2_0 spowoduje powrot do procesu nadrzednego")
-
+                        print(s_too_long, " - Odłożenie gotowego elementu i powrot do procesu nadrzednego")
 
 
         #print(master_transitions[f"{int(x[2])}_{t}"].identifier)
