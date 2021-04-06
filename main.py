@@ -97,6 +97,7 @@ while 1:
     print("Obecne mozliwe tranzycje to: ")
     for t in from_to[int(x[2])][1]:
         too_long = master_transitions[f"{int(x[2])}_{t}"].identifier
+
         #print(master_transitions[f"{int(x[2])}_{t}"].identifier)
         if too_long == "0_1":
             print(too_long, " - Otrzymano sygnal o nowym elemencie")
