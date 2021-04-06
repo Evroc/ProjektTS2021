@@ -85,6 +85,7 @@ for t in from_to[0][1]:
 while 1:
     print("-------------------")
     x = input("Wpisz wybrana tranzycje: ")
+    print("czesc")
     if x == str('quit'):
 
         break
