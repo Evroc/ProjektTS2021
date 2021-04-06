@@ -8,5 +8,8 @@ class customState(State):
         self._initial = initial
         self.identifier = None  # type: Optional[Text]
         self.transitions = []  # type: List[Transition]
-        self.test = []
+        self.isSlave = False
+        self.slave = []
+
+
         

@@ -41,3 +41,4 @@ class Generator(StateMachine):
     @classmethod
     def create_master(cls, states, transitions) -> 'Generator':
         return cls(states, transitions)
+

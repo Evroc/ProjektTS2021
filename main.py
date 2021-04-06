@@ -3,6 +3,8 @@ from statemachine import StateMachine, State, Transition
 from tranzycja import *
 import networkx as nx
 import matplotlib.pyplot as plt
+from customState import customState
+
 
 # define states for a master (way of passing args to class)
 
@@ -14,14 +16,21 @@ options = [
     {"name": "Element odrzucony", "initial": False, "value": "element_odrzucony"}, #4
     {"name": "Przeniesienie obiektu do pudelek", "initial": False, "value": "przeniesienie_obiektu_do_pudelek"}, #5
     {"name": "Odbior", "initial": False, "value": "odbior"}, #6
-    {"name": "Proces zatrzymany", "initial": False, "value": "proces_zatrzymany"}, #7
+    {"name": "Proces zatrzymany", "initial": False, "value": "proces_zatrzymany"} #7
 
 ]
 
 
+options_slave = [
+    {"name": "Obiekt w CNC", "initial": True, "value": "obiekt_w_cnc"},  # 0
+    {"name": "Obrobka", "initial": False, "value": "obrobka"},  # 1
+    {"name": "Odlozenie", "initial": False, "value": "odlozenie"}  # 2
+]
+
 # create State objects for a master
 # ** -> unpack dict to args
 master_states = [State(**opt) for opt in options]
+slave_states = [State(**opt) for opt in options_slave]
 
 # valid transitions for a master (indices of states from-to)
 from_to = [
@@ -35,18 +44,26 @@ from_to = [
     [7, [0]],
 ]
 
+from_to_slave = [
+    [0, [1]],
+    [1, [2]],
+    [2, [0]],
+]
 
-
+slave_states, slave_transitions = setTransition(from_to_slave, slave_states, 's')
 master_states, master_transitions = setTransition(from_to, master_states, 'r')
+
 #master_transitions = {}
 
 
 
 # create paths from transitions (exemplary)
-path_1 = ["0_1", "1_2", "2_3", "3_5", "5_0"] #bez odrzucenia kontrolii jakosci i bez przepelnionego pudelka
-path_2 = ["0_1", "1_2", "2_3", "3_4", "4_6", "6_0"]
-path_3 = ["0_1", "1_2", "2_3", "3_0"]
-paths = [path_1]
+# path_1 = ["0_1", "1_2", "2_3", "3_5", "5_0"] #bez odrzucenia kontrolii jakosci i bez przepelnionego pudelka
+# path_2 = ["0_1", "1_2", "2_3", "3_4", "4_6", "6_0"]
+# path_3 = ["0_1", "1_2", "2_3", "3_0"]
+# paths = [path_1]
+
+
 
 # execute paths
 
@@ -54,7 +71,7 @@ paths = [path_1]
 
 # create a supervisor
 supervisor = Generator.create_master(master_states, master_transitions)
-
+slave = Generator.create_master(slave_states, slave_transitions)
 
 
 
@@ -70,9 +87,11 @@ supervisor = Generator.create_master(master_states, master_transitions)
 #     except:
 #         print("error_msg")
 # print(from_to[0][1][0])
+
 print("********START************")
 print("Jestes w stanie startowym: ")
 print(supervisor.current_state.name)
+#print(slave.current_state.name)
 #print(supervisor.current_state[1])
 print("--------------------------")
 print("Aby dokonac przejscia podaj wartosc z ktorej tranzycji_do ktorej tranzycji, aby wyjsc wpisz quit")
@@ -97,6 +116,25 @@ while 1:
     print("Obecne mozliwe tranzycje to: ")
     for t in from_to[int(x[2])][1]:
         too_long = master_transitions[f"{int(x[2])}_{t}"].identifier
+        state_now = supervisor.current_state.name
+
+        if state_now == "CNC":
+            while True:
+                if slave.current_state._initial == True:
+                    print("Jedyna mozliwa tranzycja to 0_1")
+                a = input("Wpisz wybrana tranzycje: ")
+                if a == "2_0":
+                    break
+                slave_transitions[a]._run(slave)
+                for y in from_to_slave[int(a[2])][1]:
+                    s_too_long = slave_transitions[f"{int(a[2])}_{y}"].identifier
+                    print("TEST2")
+                    print(s_too_long)
+                    print("TEST2")
+                    if s_too_long == "2_0":
+                        print("Wpisane 2_0 spowoduje powrot do procesu nadrzednego")
+
+
 
         #print(master_transitions[f"{int(x[2])}_{t}"].identifier)
         if too_long == "0_1":
