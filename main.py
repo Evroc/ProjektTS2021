@@ -53,19 +53,6 @@ from_to_slave = [
 slave_states, slave_transitions = setTransition(from_to_slave, slave_states, 's')
 master_states, master_transitions = setTransition(from_to, master_states, 'r')
 
-#master_transitions = {}
-
-
-
-# create paths from transitions (exemplary)
-# path_1 = ["0_1", "1_2", "2_3", "3_5", "5_0"] #bez odrzucenia kontrolii jakosci i bez przepelnionego pudelka
-# path_2 = ["0_1", "1_2", "2_3", "3_4", "4_6", "6_0"]
-# path_3 = ["0_1", "1_2", "2_3", "3_0"]
-# paths = [path_1]
-
-
-
-# execute paths
 
 
 
@@ -74,11 +61,6 @@ supervisor = Generator.create_master(master_states, master_transitions)
 slave = Generator.create_master(slave_states, slave_transitions)
 
 
-
-# run supervisor for exemplary path
-#print("--------------------------")
-
-#print(f"Jesteś w punkcie {supervisor.current_state}")
 
 # for i in enumerate(from_to):
 #     try:
@@ -91,8 +73,6 @@ slave = Generator.create_master(slave_states, slave_transitions)
 print("********START************")
 print("Jestes w stanie startowym: ")
 print(supervisor.current_state.name)
-#print(slave.current_state.name)
-#print(supervisor.current_state[1])
 print("--------------------------")
 print("Aby dokonac przejscia podaj wartosc z ktorej tranzycji_do ktorej tranzycji, aby wyjsc wpisz quit")
 print("Twoje obecne mozliwe tranzycje to:")
@@ -161,17 +141,6 @@ while 1:
             print(too_long, " - Wznowienie procesu")
 
 
-
-#print(f"2Jesteś w punkcie {supervisor.current_state}")
-
-#print("Executing path: {}".format(paths))
-
-#abc = input(f"Jestes w:  {supervisor.current_state.value}")
-
-
-
-#n = input(f"Znajdujesz się w {supervisor.current_state.value}, wybierz 1 żeby przenieść obiekt do CNC lub 2 żeby zatrzymać proces ")
-# launch a transition in our supervisor
 print("-------------------")
 print("Nastapilo wyjscie z programu")
 print("-------------------")
