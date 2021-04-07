@@ -1,6 +1,7 @@
 from generator import Generator
 from statemachine import StateMachine, State, Transition
 from tranzycja import *
+from nx import *
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -53,21 +54,9 @@ slave_states, slave_transitions = setTransition(from_to_slave, slave_states, 's'
 master_states, master_transitions = setTransition(from_to, master_states, 'r')
 
 
-
-
 # create a supervisor
 supervisor = Generator.create_master(master_states, master_transitions)
 slave = Generator.create_master(slave_states, slave_transitions)
-
-
-
-# for i in enumerate(from_to):
-#     try:
-#         print(i)
-#
-#     except:
-#         print("error_msg")
-# print(from_to[0][1][0])
 
 print("********START************")
 print("Jestes w stanie startowym: ")
@@ -93,6 +82,9 @@ while 1:
     master_transitions[x]._run(supervisor)
     print("-------------------")
     print("Twoj obecny stan to: ", supervisor.current_state.name)
+
+    draw_graph(supervisor.current_state.name)
+
     print("Obecne mozliwe tranzycje to: ")
     for t in from_to[int(x[2])][1]:
         too_long = master_transitions[f"{int(x[2])}_{t}"].identifier
