@@ -12,7 +12,7 @@ options = [
     {"name": "Obiekt w podajniku", "initial": True, "value": "obiekt_w_podajniku"}, #0
     {"name": "Przenoszenie do CNC", "initial": False, "value": "przenoszenie_do_cnc"}, #1
     {"name": "CNC", "initial": False, "value": "cnc"}, #2
-    {"name": "Kontrola jakości", "initial": False, "value": "kontrola_jakosci"}, #3
+    {"name": "Kontrola jakosci", "initial": False, "value": "kontrola_jakosci"}, #3
     {"name": "Element odrzucony", "initial": False, "value": "element_odrzucony"}, #4
     {"name": "Przeniesienie obiektu do pudelek", "initial": False, "value": "przeniesienie_obiektu_do_pudelek"}, #5
     {"name": "Odbior", "initial": False, "value": "odbior"}, #6
@@ -72,6 +72,10 @@ for t in from_to[0][1]:
         print(too_long, " - Zatrzymanie procesu")
 
 while 1:
+
+    draw_graph(supervisor.current_state.name)
+
+
     print("-------------------")
     x = input("Wpisz wybrana tranzycje: ")
     print("czesc")
@@ -83,7 +87,6 @@ while 1:
     print("-------------------")
     print("Twoj obecny stan to: ", supervisor.current_state.name)
 
-    draw_graph(supervisor.current_state.name)
 
     print("Obecne mozliwe tranzycje to: ")
     for t in from_to[int(x[2])][1]:
@@ -93,21 +96,25 @@ while 1:
         if state_now == "CNC":
             while True:
                 if slave.current_state._initial == True:
+
                     print("0_1 - Zamknięcie drzwi elementu podrzednego")
                 a = input("Wpisz wybrana tranzycje: ")
                 if a == "2_0":
                     break
                 slave_transitions[a]._run(slave)
+                draw_graph_slave(slave.current_state.name)
+
                 print("-------------------")
                 print("Twoj obecny stan to: ", slave.current_state.name)
                 print("Obecne mozliwe tranzycje to: ")
 
                 for y in from_to_slave[int(a[2])][1]:
+
                     s_too_long = slave_transitions[f"{int(a[2])}_{y}"].identifier
                     if s_too_long == "0_1":
-                        print(s_too_long, " - Zamknięcie drzwi")
+                        print(s_too_long, " - Zamknięcie drzwi, gotowy do obróbki")
                     if s_too_long == "1_2":
-                        print(s_too_long, " - Obróbka")
+                        print(s_too_long, " - Otwarcie drzwi, koniec obróbki")
                     if s_too_long == "2_0":
                         print(s_too_long, " - Odłożenie gotowego elementu i powrot do procesu nadrzednego")
 
