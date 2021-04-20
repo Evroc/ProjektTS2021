@@ -78,10 +78,21 @@ while 1:
 
     print("-------------------")
     x = input("Wpisz wybrana tranzycje: ")
-    print("czesc")
     if x == str('quit'):
 
         break
+
+    # przejscia slave - master, master - slave
+
+    elif x == str('1_2'):
+        supervisor.current_state.name = "CNC"
+        draw_graph(supervisor.current_state.name)
+        slave.current_state.name = "Obiekt w CNC"
+        draw_graph_slave(slave.current_state.name)
+
+    elif x == str('2_0'):
+        slave.current_state.name = "Obiekt w CNC"
+        draw_graph_slave(slave.current_state.name)
 
     master_transitions[x]._run(supervisor)
     print("-------------------")
@@ -118,13 +129,13 @@ while 1:
                     if s_too_long == "2_0":
                         print(s_too_long, " - Odłożenie gotowego elementu i powrot do procesu nadrzednego")
 
-
         #print(master_transitions[f"{int(x[2])}_{t}"].identifier)
         if too_long == "0_1":
             print(too_long, " - Otrzymano sygnal o nowym elemencie")
         if too_long == "0_7":
             print(too_long, " - Zatrzymanie procesu")
         if too_long == "1_2":
+
             print(too_long, " - Odlozenie elementu")
         if too_long == "2_3":
             print(too_long, " - Element do kontroli jakosci")

@@ -68,7 +68,7 @@ edges = [("Obiekt w podajniku", "Przenoszenie do CNC"),
          ("CNC", "Kontrola jakosci"),
          ("Kontrola jakosci", "Element odrzucony"),
          ("Kontrola jakosci", "Przeniesienie obiektu do pudelek"),
-         ("Element odrzucony", "Obiekt w podajniku"),
+         #("Element odrzucony", "Obiekt w podajniku"),
          ("Przeniesienie obiektu do pudelek", "Odbior"),
          ("Przeniesienie obiektu do pudelek", "Obiekt w podajniku"),
          ("Odbior", "Proces zatrzymany"),
@@ -86,15 +86,14 @@ nodes = ["Obiekt w podajniku", #1
          ]
 #ew todo strzalki
 #dodanie x, y wspoł napisow - matplotlib dodanie !
-labels = {("Obiekt w podajniku", "Przenoszenie do CNC"): "Sygnał - Nowy element!",
-         ("Obiekt w podajniku", "Proces zatrzymany"): "STOP!",
-         ("Przenoszenie do CNC", "CNC"): "Element odłożony!",
-         ("CNC", "Kontrola jakosci"): "Element gotowy!",
-         ("Kontrola jakosci", "Element odrzucony"): "Odrzucono!", ("Kontrola jakosci", "Przeniesienie obiektu do pudelek"): "Przyjęto!",
-         ("Element odrzucony", "Obiekt w podajniku"): "Nowy element!",
-         ("Przeniesienie obiektu do pudelek", "Odbior"): "Pudełko pełne!", ("Przeniesienie obiektu do pudelek", "Obiekt w podajniku"): "Gotowe!",
-         ("Odbior", "Proces zatrzymany"): "Zatrzymanie procesu!",
-         ("Proces zatrzymany", "Obiekt w podajniku"): "Wznów!"
+labels = {('Obiekt w podajniku', 'Przenoszenie do CNC'): "Sygnał - Nowy element!",
+          ("Obiekt w podajniku", "Proces zatrzymany"): "STOP!",
+          ("Przenoszenie do CNC", "CNC"): "Element odłożony!",
+          ("CNC", "Kontrola jakosci"): "Element gotowy!",
+          ("Kontrola jakosci", "Element odrzucony"): "Odrzucono!", ("Kontrola jakosci", "Przeniesienie obiektu do pudelek"): "Przyjęto!",
+          ("Przeniesienie obiektu do pudelek", "Odbior"): "Pudełko pełne!", ("Przeniesienie obiektu do pudelek", "Obiekt w podajniku"): "Gotowe!",
+          ("Odbior", "Proces zatrzymany"): "Zatrzymanie procesu!",
+          ("Proces zatrzymany", "Obiekt w podajniku"): "Wznów!"
          }
 
 g = nx.DiGraph() #master g
@@ -116,6 +115,9 @@ h.add_nodes_from(nodes_sl)
 
 
 def draw_graph_slave(current_state):
+    plt.ion()
+
+    plt.figure('Slave automa', figsize=(6, 3))
     for node in h:
         if node == current_state:
             color_map_sla.append('blue')
